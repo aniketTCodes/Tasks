@@ -20,9 +20,12 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.simulateHotReload
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -73,27 +76,32 @@ fun HomeScreen(
     viewModel: TasksViewModel,
     date:String
 ) {
-    var listisEmpty by remember{
-        mutableStateOf(false)
-    }
 
-    Scaffold(topBar = {TopAppBar(date = date)}, floatingActionButton = { FloatingButton(navController)}) {
-        Surface(modifier = Modifier
-            .padding(it)
-            .fillMaxSize(), color = Color.Black) {
-            Column(Modifier.padding(top=15.dp)) {
-                listisEmpty= viewModel.isEmpty()
-                if(!listisEmpty)
-                TasksList(context,menuDatabaseItem,viewModel)
-                else{
-                    Text(text = "You have no tasks", color = Color.Gray)
+
+    Scaffold(
+        topBar = { TopAppBar(date = date) },
+        floatingActionButton = { FloatingButton(navController) }) {
+        Surface(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize(), color = Color.Black
+        ) {
+            Column(
+                Modifier.padding(top = 15.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (menuDatabaseItem.isEmpty()) {
+                    Text("you have no tasks currently", color = Color.Gray, fontSize = 15.sp)
                 }
+                TasksList(context, menuDatabaseItem, viewModel)
+
 
             }
 
 
         }
     }
-
 }
+
+
 

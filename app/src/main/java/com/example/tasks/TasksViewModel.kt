@@ -19,6 +19,7 @@ class TasksViewModel(application: Application):AndroidViewModel(application){
 
      val repository:TasksRepository = TasksRepository(database.tasksDao())
      val allTask=repository.taskList
+
     fun addTask(task: Task){
         viewModelScope.launch(Dispatchers.IO) {
             repository.addTask(task)

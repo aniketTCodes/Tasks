@@ -47,8 +47,12 @@ fun AddTask(navController: NavHostController, database: TasksViewModel) {
             )
             Button(
                 onClick = {
+                    if(input!="")
                     database.addTask(Task(UUID.randomUUID().toString(), input, false))
                     navController.navigate(HomeScreen.route)
+                    
+
+
                 },
                 modifier = Modifier
                     .fillMaxWidth()
